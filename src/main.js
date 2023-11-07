@@ -523,7 +523,7 @@ function render() {
 	});
 
 	// 展示按钮区域
-	let btnList = ["开始共享", "下载切片", "下载整片", "结束共享"];
+	let btnList = ["开始录制", "下载切片", "下载整片", "结束录制"];
 	for (let i = 0; i < btnList.length; i++) {
 		let element = createElement("div", {
 			class: "srtab__btn_item",
@@ -543,7 +543,7 @@ function render() {
 
 		// 绑定事件
 		switch (btnList[i]) {
-			case "开始共享":
+			case "开始录制":
 				element.onclick = startRecord;
 				break;
 			case "下载切片":
@@ -552,7 +552,7 @@ function render() {
 			case "下载整片":
 				element.onclick = download;
 				break;
-			case "结束共享":
+			case "结束录制":
 				element.onclick = stopRecord;
 				break;
 		}
