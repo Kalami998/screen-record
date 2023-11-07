@@ -20,7 +20,7 @@ import {
     download,
     downloadPart,
     getBlobData
-} from "fe-webrtc"
+} from "screen-record"
 
 ## 初始化注册方法
 init

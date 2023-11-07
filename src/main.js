@@ -1,6 +1,6 @@
 const path = require("path");
 
-var febId = "";
+var srId = "";
 
 // 获取视频流信息
 var constants;
@@ -90,7 +90,7 @@ async function init(eleId = "", defaultData = "") {
 		outputType = defaultData.outputType;
 	}
 
-	febId = eleId;
+	srId = eleId;
 
 	// 渲染自生样式 不需要noRender参数传入true即可
 	if (!defaultData.noRender) {
@@ -158,7 +158,7 @@ function getSupports() {
 
 	supportedList = supported;
 
-	// console.log("fe-wecrtc support--", supportedList);
+
 }
 
 // 添加一些页面监听事件
@@ -204,7 +204,7 @@ async function startRecord() {
 		stopRecord();
 	});
 
-	console.log("fe-webrtc mediaStream--", mediaStream);
+	console.log("screen-record mediaStream--", mediaStream);
 
 	if (videoLive) {
 		videoLive.srcObject = mediaStream;
@@ -259,7 +259,7 @@ async function startRecord() {
 	//     }, countTime);
 	// }
 
-	console.log("fe-webrtc begin--");
+	console.log("screen-record begin--");
 }
 
 /**
@@ -282,7 +282,7 @@ function stopRecord() {
 		recordWhole.stop();
 	}
 
-	console.log("fe-webrtc stop--", recordTimes);
+	console.log("screen-record stop--", recordTimes);
 
 	pickUp();
 
@@ -384,7 +384,7 @@ function createVideo(data) {
 		type: mediaOptions.mimeType,
 	});
 	let url = URL.createObjectURL(blob);
-	console.log("fe-webrtc create--", url);
+	console.log("screen-record create--", url);
 
 	// 设置 a 标签的 href 属性为刚刚生成的 URL 地址
 	let a = document.createElement("a");
@@ -484,7 +484,7 @@ function judgeTime() {
  * 设置计时器时长
  */
 function setTimeHtml(data = "") {
-	let timeEle = document.querySelector(".fetab__block_timing");
+	let timeEle = document.querySelector(".srtab__block_timing");
 	let temp = data || judgeTime();
 	recordTimes = temp;
 	// innerHTML 是推入模版字符串 或是 文本
@@ -497,19 +497,19 @@ function setTimeHtml(data = "") {
 function render() {
 	// 计时块
 	const timing = createElement("div", {
-		class: "fetab__block_timing",
+		class: "srtab__block_timing",
 		text: "00:00",
 	});
 
 	const icon = createElement("img", {
-		class: "fetab__block_img",
+		class: "srtab__block_img",
 		src: path.resolve(__dirname, "./image/record.svg"),
 		style: "width:18px;height:18px;margin-right:4px;",
 	});
 
 	// 上模块
 	const timeBlock = createElement("div", {
-		class: "fetab__block",
+		class: "srtab__block",
 		child: [icon, timing],
 		style:
 			"/* 布局 */width:100%;font-size: 14px;line-height:20px;display: flex;align-items: center;justify-content: center;",
@@ -517,7 +517,7 @@ function render() {
 
 	// 下模块
 	const contentBtn = createElement("div", {
-		class: "fetab__btn",
+		class: "srtab__btn",
 		style:
 			"/* 布局 */height:24px;line-height:24px;display: flex;align-items: center;justify-content: center;transition: .3s all ease;overflow:hidden;",
 	});
@@ -526,7 +526,7 @@ function render() {
 	let btnList = ["开始共享", "下载切片", "下载整片", "结束共享"];
 	for (let i = 0; i < btnList.length; i++) {
 		let element = createElement("div", {
-			class: "fetab__btn_item",
+			class: "srtab__btn_item",
 			text: btnList[i],
 			style:
 				"padding: 0 8px;cursor: pointer;border-radius:6px;transition: .3s all ease-in",
@@ -562,7 +562,7 @@ function render() {
 
 	// 主元素
 	content = createElement("div", {
-		class: "fetab",
+		class: "srtab",
 		child: [timeBlock, contentBtn],
 		style:
 			"position: fixed;top: 0px;left: 0;right: 0;z-index: 1200;margin: auto;padding: 4px 8px;width: fit-content;min-width:60px;background: #fff;border: 1px solid #f5f5f5;border-radius: 0px 0px 12px 12px;box-shadow: 0px 6px 8px 0px rgba(199, 199, 199, 0.16);/* 字体 */font-size: 12px;line-height: 1.4;color: #28282a;opacity:0;transition:.3s opacity ease;",
@@ -576,9 +576,9 @@ function render() {
 		// 直接推入 body 中，但是无法监听history的pushState，replaceState(Vue-Router使用)变化，在这种场景下无法注销
 		// document.body.appendChild(content);
 		// 插入子节点推入
-		// document.getElementById(febId).appendChild(content);
+		// document.getElementById(srId).appendChild(content);
 		// 替换子节点 推入
-		const leaveEle = document.getElementById(febId);
+		const leaveEle = document.getElementById(srId);
 		leaveEle.parentNode.replaceChild(content, leaveEle);
 		setTimeout(() => {
 			content.style.opacity = 1;
@@ -594,7 +594,7 @@ function pickUp() {
 			clearTimeout(btnTimeout);
 			btnTimeout = null;
 		}
-		let btnArea = document.querySelector(".fetab__btn");
+		let btnArea = document.querySelector(".srtab__btn");
 		btnArea.style.width = "unset";
 		btnArea.style.height = "24px";
 		btnArea.style.lineHeight = "24px";
@@ -605,7 +605,7 @@ function pickUp() {
 function pickDown() {
 	if (startTime) {
 		// console.log("记录时鼠标移出组件区域");
-		let btnArea = document.querySelector(".fetab__btn");
+		let btnArea = document.querySelector(".srtab__btn");
 		btnTimeout = setTimeout(() => {
 			btnArea.style.width = 0;
 			btnArea.style.height = 0;
@@ -647,7 +647,7 @@ function getBlobData() {
 			});
 		}
 
-		console.log("fewebrtc backData--");
+		console.log("screen-record backData--");
 	});
 }
 
