@@ -1,0 +1,2 @@
+- 1.引入图片加载并能作为npm插件正常使用
+- 2. package.json 文件入口 main 更换到 './dist/screen-record.min.js'
