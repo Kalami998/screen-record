@@ -1,8 +1,7 @@
 {
-	"name": "screen-webrtc",
-	"version": "1.0.2",
+	"name": "screen-record",
+	"version": "1.0.3",
 	"description": "",
-	"main": "./dist/screen-webrtc.min.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "node index",
@@ -13,10 +12,9 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"clean-webpack-plugin": "^4.0.0",
+		"path": "^0.12.7",
 		"webpack": "^5.74.0",
 		"webpack-cli": "^4.10.0"
-	},
-	"dependencies": {
-		"clean-webpack-plugin": "^4.0.0"
 	}
 }
