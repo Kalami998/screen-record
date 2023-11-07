@@ -502,11 +502,11 @@ function render() {
 	});
 
 	// path.resolve(__dirname, "./image/record.svg")
-	const icon = createElement("img", {
-		class: "srtab__block_img",
-		src: iconImg,
-		style: "width:18px;height:18px;margin-right:4px;",
-	});
+	// const icon = createElement("img", {
+	// 	class: "srtab__block_img",
+	// 	src: iconImg,
+	// 	style: "width:18px;height:18px;margin-right:4px;",
+	// });
 
 	// 上模块
 	const timeBlock = createElement("div", {
