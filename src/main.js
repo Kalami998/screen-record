@@ -1,5 +1,7 @@
 const path = require("path");
 
+// const iconImg = require("./image/record.svg");
+
 var srId = "";
 
 // 获取视频流信息
@@ -157,8 +159,6 @@ function getSupports() {
 	});
 
 	supportedList = supported;
-
-
 }
 
 // 添加一些页面监听事件
@@ -501,16 +501,17 @@ function render() {
 		text: "00:00",
 	});
 
+	// path.resolve(__dirname, "./image/record.svg")
 	const icon = createElement("img", {
 		class: "srtab__block_img",
-		src: path.resolve(__dirname, "./image/record.svg"),
+		src: iconImg,
 		style: "width:18px;height:18px;margin-right:4px;",
 	});
 
 	// 上模块
 	const timeBlock = createElement("div", {
 		class: "srtab__block",
-		child: [icon, timing],
+		child: [timing],
 		style:
 			"/* 布局 */width:100%;font-size: 14px;line-height:20px;display: flex;align-items: center;justify-content: center;",
 	});
