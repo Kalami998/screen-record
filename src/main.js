@@ -1,8 +1,9 @@
-const path = require("path");
-
-// const iconImg = require("./image/record.svg");
+// 打包时放开 html文件不能直接
+// import actionIcon from "./image/action.png";
 
 var srId = "";
+
+var appendType = 1; // 1直接推入 2插入输入id子集 3通过输入id替换
 
 // 获取视频流信息
 var constants;
@@ -69,7 +70,7 @@ var recordType;
 var content = null;
 
 // 插件初始化
-async function init(eleId = "", defaultData = "") {
+async function initRecord(eleId = "", defaultData = {}) {
 	await getSupports();
 
 	mediaOptions = {
@@ -82,6 +83,8 @@ async function init(eleId = "", defaultData = "") {
 	};
 
 	videoSize = defaultData.videoSize || 1024;
+
+	appendType = defaultData.appendType || 1;
 
 	constants = defaultData.constants || {
 		audio: true,
@@ -104,8 +107,16 @@ async function init(eleId = "", defaultData = "") {
 	addListeners();
 
 	// 视频展示区
-	videoLive = document.getElementById("live");
-	videoPreview = document.getElementById("preview");
+	videoLive = document.getElementById("sr-live");
+	if (videoLive) {
+		videoLive.autoplay = "true";
+		videoLive.controls = "controls";
+	}
+
+	videoPreview = document.getElementById("sr-preview");
+	if (videoPreview) {
+		videoPreview.controls = "controls";
+	}
 }
 
 // 获取当前支持的录制类型
@@ -398,7 +409,6 @@ function createVideo(data) {
 
 	// 可以预览
 	if (videoPreview) {
-		videoPreview.controls = "controls";
 		/**
 		 *  window.URL.revokeObjectURL 释放过早会导致videoPreview预览失败
 		 *  所以下面使用了 setTimeout 延时释放
@@ -501,17 +511,24 @@ function render() {
 		text: "00:00",
 	});
 
-	// path.resolve(__dirname, "./image/record.svg")
+	// 打包时放开
 	// const icon = createElement("img", {
 	// 	class: "srtab__block_img",
-	// 	src: iconImg,
+	// 	src: actionIcon,
 	// 	style: "width:18px;height:18px;margin-right:4px;",
 	// });
+
+	// index.html引入放开
+	const icon = createElement("img", {
+		class: "srtab__block_img",
+		src: "./image/action.png",
+		style: "width:18px;height:18px;margin-right:4px;",
+	});
 
 	// 上模块
 	const timeBlock = createElement("div", {
 		class: "srtab__block",
-		child: [timing],
+		child: [icon, timing],
 		style:
 			"/* 布局 */width:100%;font-size: 14px;line-height:20px;display: flex;align-items: center;justify-content: center;",
 	});
@@ -574,16 +591,22 @@ function render() {
 
 	// 加入页面中
 	if (document) {
-		// 直接推入 body 中，但是无法监听history的pushState，replaceState(Vue-Router使用)变化，在这种场景下无法注销
-		// document.body.appendChild(content);
-		// 插入子节点推入
-		// document.getElementById(srId).appendChild(content);
-		// 替换子节点 推入
-		const leaveEle = document.getElementById(srId);
-		leaveEle.parentNode.replaceChild(content, leaveEle);
+		if (appendType == 1) {
+			// 直接推入 body 中，但是无法监听history的pushState，replaceState(Vue-Router使用)变化，在这种场景下无法注销
+			document.body.appendChild(content);
+		} else if (appendType == 2) {
+			// 插入子节点推入
+			document.getElementById(srId).appendChild(content);
+		} else {
+			// 替换子节点 推入
+			// 可通过页面切换注释掉
+			const leaveEle = document.getElementById(srId);
+			leaveEle.parentNode.replaceChild(content, leaveEle);
+		}
+
 		setTimeout(() => {
 			content.style.opacity = 1;
-		}, 800);
+		}, 500);
 	}
 }
 
@@ -706,8 +729,8 @@ function createElement(tagName, options = "") {
 	return ele;
 }
 
-module.exports = {
-	init,
+export {
+	initRecord,
 	getSupports,
 	startRecord,
 	stopRecord,

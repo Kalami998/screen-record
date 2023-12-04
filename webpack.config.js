@@ -1,5 +1,6 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
 	mode: "production", // 环境
@@ -30,9 +31,24 @@ module.exports = {
 					},
 				],
 			},
+			{
+				test: /\.js$/i,
+				exclude: "/node_modules",
+				use: [
+					{
+						loader: "babel-loader",
+						// options: {
+						// 	presets: ["@babel/preset-env"],
+						// },
+					},
+				],
+			},
 		],
 	},
 	plugins: [
 		new CleanWebpackPlugin(), // 清除上一次打包内容
+		new HtmlWebpackPlugin({
+			title: "screen-record",
+		}),
 	],
 };

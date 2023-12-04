@@ -2,27 +2,37 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>screen-record</title>
-		<script type="text/javascript" src="./index.js"></script>
+		<link rel="stylesheet" href="./index.css"></link>
+		<!-- <script type="text/javascript" src="../dist/screen-record.min.js"> -->
+		</script>
+		
 	</head>
-	<img>
+	<body>
 		<div class="app">
 			<div id="demoId"></div>
-			<div>screen-record</div>
+
+			<h4>screen-record</h4>
+		
+			<div class="app__preview">
+				实时屏幕：
+				<video class="app__preview_video" id="sr-live">
+	
+				</video>
+			</div>
+			<div class="app__download">
+				切片&整片:
+				<video  class="app__download_video" id="sr-preview">
+	
+				</video>
+			</div>
+		
 		</div>
 	</body>
-	<script>
-		init("demoId");
+	
+	<!-- module针对export导出 -->
+	<script  type="module">
+		import { initRecord } from './main.js'
+
+		initRecord();
 	</script>
 </html>
-<style>
-	* {
-		margin: 0;
-		padding: 0;
-	}
-
-	.app {
-		padding: 16px;
-		font-size: 20px;
-	}
-
-</style>
